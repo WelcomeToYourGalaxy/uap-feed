@@ -38,6 +38,20 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 
+# The shared gazetteer. Placement used to be each wire's own short country
+# table, which put most of every wire in a counter marked "unplaced"; this is
+# the fleet's common one, and it is optional at import so a harvest still runs
+# if the data file has not been fetched yet.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    import galaxy_places
+    _GAZETTEER = True
+except Exception as _exc:                       # noqa: BLE001
+    print("  ! gazetteer unavailable (%s); falling back to the local table"
+          % _exc, file=sys.stderr)
+    galaxy_places = None
+    _GAZETTEER = False
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 SOURCES_PATH = os.path.join(HERE, "sources_uap.json")
 OUT_PATH = os.path.join(HERE, "wire_uap.json")
@@ -68,9 +82,24 @@ def build_gnews_url(loc):
     return ("https://news.google.com/rss/search?q=" + urllib.parse.quote(q) +
             "&hl=" + loc["hl"] + "&gl=" + loc["gl"] + "&ceid=" + loc["ceid"])
 
+READ_BUDGET_MIN = 35          # minutes spent reading wires
+
+# The wall-clock budget for reading wires. Past it the remaining sources are
+# recorded unreachable and the harvest finishes on what it has, because the
+# wire is only written at the end of run() and a job killed by the workflow
+# timeout commits nothing at all — which is how a feed gets stuck stale.
+DEADLINE = None
+
+
+def out_of_time():
+    return DEADLINE is not None and time.monotonic() > DEADLINE
+
+
 def fetch(url, tries=3):
     last = None
     for attempt in range(tries):
+        if out_of_time():
+            return None
         try:
             req = urllib.request.Request(url, headers={
                 "User-Agent": USER_AGENT,
@@ -83,6 +112,16 @@ def fetch(url, tries=3):
                 if resp.headers.get("Content-Encoding") == "gzip":
                     raw = gzip.GzipFile(fileobj=io.BytesIO(raw)).read()
                 return raw
+        except urllib.error.HTTPError as exc:
+            last = exc
+            # Being rate-limited or refused is an answer, not a hiccup. Trying
+            # the same query twice more against the same limiter spends eighty
+            # seconds of a worker slot to be told the same thing, and deepens
+            # the throttle for every other query in the run.
+            if exc.code in (403, 429, 451):
+                time.sleep(1.5)
+                break
+            time.sleep(1.5 * (attempt + 1))
         except Exception as exc:                       # noqa: BLE001 — report, don't crash the run
             last = exc
             time.sleep(1.5 * (attempt + 1))
@@ -493,6 +532,19 @@ TOPICS = [
         ("transmedium", None), ("underwater object", None), ("sonar", ["unidentified", "anomalous", "contact"]),
         ("submarine crew", ["unidentified", "object"]), ("objeto sumergido", None),
     ]),
+    ("encounters", "Reported encounters, and what is claimed", [
+        # The section gives these a paragraph of their own — the 1991 Roper
+        # figure, the intrusion cases, the abductions, and the animal and plant
+        # mutilations — and the wire had no subject that would take any of it.
+        # The esoteric material stays refused by BLOCK; what is kept is a
+        # reported case, described as reported.
+        ("abduction*", ["reported", "case", "claim*", "alleged", "survey", "experiencer*"]),
+        ("experiencer*", []), ("close encounter*", []), ("intruder case", []),
+        ("cattle mutilation*", []), ("animal mutilation*", []), ("plant mutilation*", []),
+        ("roper survey", []), ("missing time", ["reported", "case"]),
+        ("landing trace", []), ("physical trace", ["case", "landing", "soil"]),
+        ("medical effect*", ["reported", "witness", "encounter"]),
+    ]),
     ("sceptic", "Explanations & debunks", [
         ("prosaic explanation", None), ("identified as a balloon", None), ("weather balloon", None),
         ("starlink", ["mistaken", "sighting", "ufo", "reported"]),
@@ -525,6 +577,128 @@ TOPICS = [
 #         end of the field. High-quality independent journalism is welcome;
 #         channelled messages and galactic federations are not.
 # --------------------------------------------------------------------------
+# --------------------------------------------------------------------------
+# The subjects, in the languages the anchor list already admits.
+#
+# The anchor is multilingual and the subjects were not, so a French, Spanish or
+# Japanese story passed relevance and then matched no subject — which the run
+# loop's silent default then filed under "sightings" regardless. That default is
+# removed below; without these terms, removing it would have thrown away the
+# non-English half of the wire along with the noise.
+# --------------------------------------------------------------------------
+# Every story here has already cleared the anchor list, so it already names a
+# UAP, a UFO, a USO or an OVNI. That makes these terms safe to write broadly:
+# the question at this stage is no longer "is this the subject" but "which part
+# of it", and the metaphorical senses are refused by BLOCK before they arrive.
+# Written narrowly on the first attempt, they refused 604 of 728 — including
+# Pentagon file releases, a whistleblower pathway, and sightings over Yakutia.
+LOCAL_TERMS = {
+    "sightings": [
+        ("spotted", ["object*", "light*", "craft", "sky", "triangle"]),
+        ("seen", ["sky", "object*", "light*", "over"]), ("filmed", ["object*", "light*", "sky"]),
+        ("footage", ["object*", "sky", "craft", "released"]), ("video", ["object*", "light*", "sky", "ovni", "ufo", "uap", "нло"]),
+        ("triangle", ["black", "silent", "giant", "sky", "overhead"]),
+        ("light*", ["sky", "glowing", "mysterious", "strange", "night", "hovering"]),
+        ("hover*", []), ("witness*", ["saw", "reported", "described", "account"]),
+        ("заметили", []), ("светящиеся объекты", []), ("нло", ["заметили", "небе", "видели"]),
+        ("三角形", []), ("上空", []), ("夜空", []), ("목격", []), ("증언", ["ufo", "봤다"]),
+        ("avistad*", []), ("captar", ["fenómenos", "ovni", "luz"]),
+        ("avistamiento*", []), ("avistamento*", []), ("avvistament*", []),
+        ("sichtung*", []), ("waarneming*", ["ufo", "object"]), ("meldestelle", []),
+        ("captan", []), ("captado", ["ovni", "objeto"]), ("presunto ovni", []), ("observation*", ["ovni", "phénomène"]),
+        ("luces", ["misteriosas", "extrañas", "cielo", "no identificad"]),
+        ("luci", ["misteriose", "strane", "nel cielo"]),
+        ("lumières", ["mystérieuses", "étranges", "ciel"]),
+        ("incidente", ["ovni", "avistamiento", "aéreo no identificad"]),
+        ("caso", ["ovni", "avistamiento", "no identificad"]),
+        ("enigma", ["ovni", "avistamiento", "aéreo"]),
+        ("lumières dans le ciel", []), ("objeto luminoso", []),
+        ("目撃情報", []), ("目撃", ["未確認", "飛行物", "ufo"]), ("발견", ["미확인", "비행"]),
+        ("наблюдение", ["нло", "объект"]), ("مشاهدة", ["جسم", "طائر"]),
+        ("penampakan", []), ("nhìn thấy", ["vật thể bay"]), ("görüldü", ["cisim", "uço"]),
+    ],
+    "military": [
+        ("chasseur*", ["intercept*", "ovni", "phénomène"]), ("caza*", ["intercept*", "ovni"]),
+        ("interception", ["ovni", "objet", "phénomène"]), ("intercepta*", ["ovni", "objeto"]),
+        ("abattu", ["objet", "ovni", "ballon"]), ("derribado", ["objeto", "ovni", "globo"]),
+        ("abbattuto", ["oggetto", "ufo"]), ("shot down", ["object", "unidentified", "balloon"]),
+        ("espacio aéreo", ["militar", "ovni", "incursión"]), ("espace aérien", ["militaire", "ovni"]),
+        ("領空", ["侵入", "未確認"]), ("撃墜", []), ("영공", ["침범", "미확인"]),
+        ("воздушное пространство", ["нло", "нарушен"]), ("المجال الجوي", ["مجهول"]),
+    ],
+    "oversight": [
+        ("whistleblower*", []), ("testimony", ["congress", "hearing", "uap", "ufo"]),
+        ("scif", []), ("classified programme*", []), ("classified program*", []),
+        ("plea to", ["reveal", "disclose"]), ("forcing open", []), ("come forward", []),
+        ("reveal", ["files", "records", "truth", "bodies", "programme*", "program*"]),
+        ("conceal*", []), ("cover-up", []), ("cover up", ["government", "pentagon", "military"]),
+        ("legislation", ["uap", "ufo", "disclosure"]), ("amendment", ["uap", "ufo", "disclosure"]),
+        ("commission", ["ufo", "uap", "monitor", "surveill*"]),
+        ("commissione", ["ufo", "monitorare"]), ("kommission", ["ufo", "überwach*"]),
+        ("monitorare", ["ufo"]), ("capacità di monitorare", []),
+        ("раскрыл", ["нло", "тайну"]), ("заявил", ["нло", "инопланет"]),
+        ("επιδιώκει", ["ufo", "uap"]), ("增믿", []),
+        ("divulgación", ["ovni", "gobierno", "documentos"]), ("divulgação", ["ovni", "governo"]),
+        ("divulgation", ["ovni", "gouvernement", "documents"]),
+        ("encubrimiento", []), ("acobertamento", []), ("dissimulation", ["ovni", "gouvernement"]),
+        ("insabbiamento", []), ("denunciante", ["ovni", "pentágono"]), ("lanceur d'alerte", ["ovni"]),
+        ("audiencia", ["ovni", "congreso"]), ("audition", ["ovni", "congrès", "parlement"]),
+        ("informe desclasificado", []), ("rapport déclassifié", []),
+        ("sondage", ["ovni", "gouvernement"]), ("encuesta", ["ovni", "gobierno"]),
+        ("poll", ["ufo", "uap", "government knows"]),
+        ("πεντάγωνο", ["ufo", "uap"]), ("αποκαλύπτουν", ["ufo", "uap"]),
+        ("en sait plus", []), ("sabe más", ["ovni", "gobierno"]),
+        ("公聴会", ["未確認", "ufo"]), ("情報公開", ["未確認", "ufo"]),
+        ("рассекреченные документы", []), ("слушания", ["нло"]),
+        ("الكشف", ["أجسام", "مجهولة"]), ("pengungkapan", ["ufo", "pemerintah"]),
+    ],
+    "uso": [
+        ("objeto sumergido", []), ("objet submergé", []), ("oggetto sommerso", []),
+        ("submarino no identificado", []), ("水中", ["未確認", "物体"]),
+        ("подводный объект", ["неопознанн"]), ("fondo marino", ["explorad", "inexplorad"]),
+        ("ocean floor", ["unexplored", "charted", "per cent"]),
+        ("only 5%", ["ocean", "explored"]), ("unexplored", ["ocean", "seafloor", "arctic", "antarctic"]),
+    ],
+    "records": [
+        ("file*", ["releas*", "declassif*", "pentagon", "archive", "disclos*", "open*", "secret"]),
+        ("record*", ["releas*", "new", "declassif*", "unresolved", "archive"]),
+        ("archivo*", ["ovni", "desclasificad", "publicad"]), ("archiv*", ["ufo", "freigegeben"]),
+        ("записи", ["нло", "показали", "новые"]), ("materiales", ["publicad", "ovni", "nuevos"]),
+        ("document*", ["releas*", "declassif*", "pentagon", "leaked", "obtained"]),
+        ("dossier*", ["ufo", "ovni", "déclassifié", "pentagone"]),
+        ("hồ sơ", []), ("檔案", []), ("机密", []), ("機密", []), ("문서", ["국방부", "공개"]),
+        ("dosya*", ["açtı", "ufo", "kayıt"]), ("expediente*", ["desclasificad", "ovni"]),
+        ("kayıt", ["yeni", "ufo"]), ("報告書", []), ("公開", ["ufo", "未確認", "機密"]),
+        ("archivo desclasificado", []), ("archives déclassifiées", []),
+        ("documenti declassificati", []), ("arquivo desclassificado", []),
+        ("freedom of information", ["ufo", "uap", "pentagon", "records"]),
+        ("公文書", ["未確認", "ufo"]), ("архив", ["нло", "рассекречен"]),
+        ("archive*", ["ufo", "uap", "pentagon", "released", "declassif*"]),
+        ("email*", ["ufo", "uap", "admiral", "pentagon"]),
+    ],
+    "encounters": [
+        ("abducid*", []), ("abducted", ["claim*", "reported", "says", "revealed"]),
+        ("alien bodies", []), ("bodies", ["alien", "non-human", "recovered", "craft"]),
+        ("non-human biologic*", []), ("remains", ["alien", "non-human", "craft", "metallic"]),
+        ("контакты", ["нло", "инопланет"]), ("инопланетян", ["виды", "лаборатор", "заявил"]),
+        ("遺体", ["宇宙人", "ufo"]), ("宇宙人", ["遺体", "証言", "接触"]),
+        # The section devotes a paragraph to these and the wire had no subject
+        # for them: intrusions, abductions, the Roper figure, and the animal and
+        # plant mutilations.
+        ("abduction*", ["reported", "case", "claim*", "alleged"]),
+        ("abducción", []), ("abdução", []), ("enlèvement", ["ovni", "extraterrestre"]),
+        ("rapimento alieno", []), ("close encounter*", []), ("encuentro cercano", []),
+        ("rencontre du troisième type", []), ("intruder case", []),
+        ("cattle mutilation*", []), ("animal mutilation*", []),
+        ("mutilación", ["ganado", "animal"]), ("mutilação", ["gado", "animal"]),
+        ("mutilation de bétail", []), ("誘拐", ["宇宙人", "エイリアン"]),
+        ("похищение", ["инопланет", "нло"]),
+    ],
+}
+
+for _tid, _label, _terms in TOPICS:
+    _terms.extend(LOCAL_TERMS.get(_tid, []))
+
 ANCHOR = [
     "uap", "u.a.p.", "ufo", "u.f.o", "ufos", "unidentified aerial phenomen*",
     "unidentified anomalous phenomen*", "unidentified flying object*",
@@ -532,7 +706,7 @@ ANCHOR = [
     "flying saucer*", "aaro", "aatip", "project blue book", "geipan", "cefaa",
     "non-human intelligence", "extraterrestrial*", "transmedium",
     "galileo project", "technosignature*", "interstellar object", "'oumuamua", "oumuamua",
-    "ovni*", "ovnis", "fani", "pan non identifié*", "phénomènes aérospatiaux non identifiés",
+    "ovni*", "ovnis", "pan non identifié*", "phénomènes aérospatiaux non identifiés",
     "unidentifizierte flugobjekt*", "objeto voador não identificado", "objeto volador no identificado",
     "oggetti volanti non identificati", "niezidentyfikowany obiekt latający",
     "нло", "неопознанный летающий объект", "невідомий літальний об'єкт",
@@ -560,6 +734,24 @@ BLOCK = [
     "abduction memory", "regression hypnosis", "chemtrail*", "illuminati", "qanon",
     "horoscope", "astrolog*", "tarot", "psychic reading", "crop circle message",
     "prophecy", "predicted date of disclosure", "channeler",
+    # "OVNI" as everyday metaphor. In French, Spanish, Italian and Portuguese it
+    # is ordinary shorthand for anything that defies category, and the press
+    # applies it to footballers, cars, gadgets, albums and television far more
+    # often than to anything in the sky. Sixteen stories about a Spanish reality
+    # television personality were also reaching the wire, because "fani" had
+    # been left in the anchor list; that is removed above.
+    "ligue 1", "serie a", "la liga", "premier league", "champions league",
+    "buts", "gol su punizione", "assist", "match report", "transfer window",
+    "j2 -", "sur france 5", "diffusions", "résumé et diffusions", "s01e", "s02e",
+    "episodio", "rai gulp", "en diretta su", "programme tv",
+    "remastered", "bonus track", "album", "concerto", "concert de", "tournée",
+    "walk on water", "ufo robot", "goldrake", "grendizer", "anime",
+    "alfa romeo", "essai routier", "prise en main", "test drive", "berline",
+    "programming contest", "university of asia pacific", "intra-uap",
+    "course à pied", "marathon", "cyclisme", "coupe du monde",
+    "bigfoot", "sasquatch", "loch ness", "cryptid",
+    "スリラー", "超大作", "映画化", "公開初日", "興行収入",
+    "thriller", "blockbuster", "trailer drops", "casting", "box-office",
 ]
 
 # --------------------------------------------------------------------------
@@ -600,6 +792,65 @@ SENSOR_C = _compile_all(SENSOR)
 TESTIMONY_C = _compile_all(TESTIMONY)
 FORMAL_C = _compile_all(FORMAL)
 RESOLVED_C = _compile_all(RESOLVED)
+# ------------------------------------------------------------------
+# Subjects this wire had a name for and never asked about.
+#
+# The terms below were already here and were well written; what was
+# missing was any query aimed at them, so they held zero stories
+# however much the world published. These are the phrases from the
+# queries now added, so what is fetched can be filed.
+# ------------------------------------------------------------------
+FILL_TERMS = {
+    "policy": [
+        ("bureau gouvernemental ovni", None), ("gabinete governamental de", None),
+        ("gesetzgebung zu uap", None), ("legislación sobre ovnis", None),
+        ("legislação sobre ovnis", None), ("législation sur les", None),
+        ("oficina gubernamental de", None), ("staatliche uap-stelle haushalt", None),
+        ("uap 法案 修正", None), ("uap 立法 修正", None),
+        ("uap 법안 수정", None), ("政府 uap 办公室", None),
+        ("政府 uap 部署", None), ("정부 uap 부서", None),
+    ],
+    "sensor": [
+        ("analisi sensori infrarossi", None), ("analyse capteurs infrarouges", None),
+        ("análise de sensores", None), ("análisis de sensores", None),
+        ("dados de radar", None), ("dati radar oggetto", None),
+        ("datos de radar", None), ("données radar objet", None),
+        ("infrarotsensor analyse ufo", None), ("radardaten unidentifiziertes objekt", None),
+        ("レーダー 記録 未確認", None), ("红外 传感器 分析", None),
+        ("赤外線 センサー 解析", None), ("雷达 数据 不明", None),
+        ("레이더 자료 미확인", None), ("적외선 센서 분석", None),
+    ],
+    "uso": [
+        ("anomalia submarina sonar", None), ("anomalie sous-marine sonar", None),
+        ("anomalía submarina sonar", None), ("objet submergé non", None),
+        ("objeto submerso não", None), ("objeto sumergido no", None),
+        ("sonar anomalie bericht", None), ("unidentifiziertes unterwasserobjekt marine", None),
+        ("ソナー 異常 報告", None), ("不明 水下 物体", None),
+        ("声呐 异常 报告", None), ("未確認 水中 物体", None),
+        ("미확인 수중 물체", None), ("소나 이상 보고", None),
+    ],
+}
+
+for _tid, _label, _terms in TOPICS:
+    _terms.extend(FILL_TERMS.get(_tid, []))
+
+
+# --------------------------------------------------------------------------
+# The same subjects in the languages this wire's own queries ask in, derived
+# from those queries and filed under the subject each query's label names. The
+# gate above was written in English; the queries were translated and it was
+# not, so three quarters of what the wire fetched could not be recognised once
+# it arrived. Generated — edit topics_multilingual.json, or delete the file to
+# turn this off.
+# --------------------------------------------------------------------------
+_EXTRA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                           "topics_multilingual.json")
+if os.path.exists(_EXTRA_PATH):
+    with open(_EXTRA_PATH, encoding="utf-8") as _fh:
+        _EXTRA = json.load(_fh)
+    TOPICS = [(tid, label, terms + [(t, g) for t, g in _EXTRA.get(tid, [])])
+              for tid, label, terms in TOPICS]
+
 TOPICS_C = [(tid, label, [(_compile(t), _compile_all(g) if g else None) for t, g in terms])
             for tid, label, terms in TOPICS]
 GEO3_C = [(rid, rlabel, [(sid, slabel, [(pid, plabel, _compile_all(terms))
@@ -981,19 +1232,91 @@ def scene_first(text, places):
         (scene if _is_scene(text, _first_pos(text, terms.get(pid, []))) else rest).append(pid)
     return scene + rest
 
-def point_for(text, places, subs, regions):
-    """The most specific point a story resolved to: a named sub-national place
-    if there is one, otherwise the country, otherwise the subregion or region.
-    Returns (label_or_None, point_or_None)."""
+
+# --------------------------------------------------------------------------
+# The gazetteer answers with a country; this wire's taxonomy is keyed on ids
+# whose leading token is that country's ISO-2. Filing a placed story under its
+# region is therefore a lookup, not a guess. Where a country is split across
+# several places, only region and subregion are filled: which of the places a
+# story belongs to is a question the country code cannot answer.
+# --------------------------------------------------------------------------
+ISO_REGION = {}
+for _rid, _rlabel, _subs in GEO3:
+    for _sid, _slabel, _places in _subs:
+        for _pid, _plabel, _terms in _places:
+            _iso = _pid.split("-")[0].lower()
+            if len(_iso) == 2:
+                ISO_REGION.setdefault(_iso, (_rid, _sid))
+
+
+def file_by_country(row, cc):
+    """Put a gazetteer-placed story in its region, if the wire has one."""
+    if not cc:
+        return
+    hit = ISO_REGION.get(str(cc).lower())
+    if not hit:
+        return
+    rid, sid = hit
+    if not row.get("w") or row["w"] == ["unlocated"]:
+        row["w"] = [rid]
+    if not row.get("sr") or row["sr"] == ["unlocated"]:
+        row["sr"] = [sid]
+
+
+
+def country_for(raw, locale=None):
+    """The ISO-2 the placement resolved to, or None."""
+    if not _GAZETTEER:
+        return None
+    try:
+        return galaxy_places.resolve_full(raw, locale)[4]
+    except Exception:
+        return None
+
+
+def point_for(text, places, subs, regions, locale=None, raw=None):
+    """The most specific point a story resolved to.
+
+    The order is deliberate. This wire's own curated table goes first: it holds
+    the places this subject actually turns up and the country list it was
+    written against, and it beats a general gazetteer on its own ground. The
+    shared gazetteer follows but only overrides at the settlement level, so a
+    headline naming Kharkiv pins on Kharkiv rather than the middle of Ukraine,
+    while a country reading from this wire's own table still wins over a
+    country reading from the gazetteer. Then the bodies that stand for a
+    jurisdiction without naming it — EFSA is a European story, ANVISA a
+    Brazilian one. Last, and weakest, the country the source itself reports
+    from.
+
+    Returns (label_or_None, point_or_None, approx). approx is True only for
+    that last case, where nothing in the story placed it and the point is the
+    reporting locale rather than the scene. The page draws those hollow.
+    """
     label, point = precise_for(text)
     if point:
-        return label, point
+        return label, point, False
+
+    glabel, gpoint, grank = None, None, -1
+    if _GAZETTEER:
+        glabel, gpoint, grank, _approx = galaxy_places.resolve_ranked(raw or text)
+        if grank == 3:
+            return glabel, gpoint, False
+
     places = scene_first(text, places)
     for level in (places, subs, regions):
         for pid in level:
             if pid in COORDS:
-                return None, COORDS[pid]
-    return None, None
+                return None, COORDS[pid], False
+
+    if gpoint:
+        return glabel, gpoint, False
+
+    if _GAZETTEER and locale:
+        llabel, lpoint, _lrank, lapprox = galaxy_places.resolve_ranked("", locale)
+        if lpoint:
+            return llabel, lpoint, lapprox
+
+    return None, None, False
 
 
 def load_sources():
@@ -1008,12 +1331,15 @@ def load_sources():
         for loc in cfg.get(block, []):
             srcs.append({"name": prefix + loc["label"], "lang": loc["lang"],
                          "standing": loc["standing"], "region": loc["standing"],
-                         "kind": "news", "url": build_gnews_url(loc)})
+                         "kind": "news", "url": build_gnews_url(loc), "gl": loc.get("gl")})
     return srcs, cfg
 
 
 def run(dry_run=False, fixtures=None):
+    global DEADLINE
     sources, cfg = load_sources()
+    if not fixtures:
+        DEADLINE = time.monotonic() + READ_BUDGET_MIN * 60
     print("Reading %d wires…" % len(sources))
 
     def read(src):
@@ -1066,9 +1392,23 @@ def run(dry_run=False, fixtures=None):
                 if not hit(text, ANCHOR_C):
                     continue
                 total, reasons = evidence(text, src["standing"])
-                row["x"] = topics_for(text) or ["sightings"]
+                # No silent default. This read `or ["sightings"]`, which filed 653
+                # of 728 stories under a subject none had matched — nine in ten
+                # of the wire — and hid that most of them were the word "OVNI"
+                # used about a footballer, a car or a television listing.
+                subjects = topics_for(text)
+                if not subjects:
+                    stat["refused"] += 1
+                    refused += 1
+                    continue
+                row["x"] = subjects
                 row["w"], row["sr"], row["pl"] = places_for(text)
-                row["pn"], row["ll"] = point_for(text, row["pl"], row["sr"], row["w"])
+                row["gl"] = src.get("gl")
+                _raw = (row["t"] or "") + " " + (row.get("s") or "")
+                row["pn"], row["ll"], row["pa"] = point_for(
+                    text, row["pl"], row["sr"], row["w"], src.get("gl"), _raw)
+                if row["ll"]:
+                    file_by_country(row, country_for(_raw, src.get("gl")))
                 row["p"] = total
                 row["y"] = reasons
                 row["st"] = src["standing"]
@@ -1081,8 +1421,23 @@ def run(dry_run=False, fixtures=None):
 
     fresh_urls = {canon_url(i["u"]) for i in items}
     for row in previous:
-        if "x" in row:
-            absorb(row)
+        if "x" not in row:
+            continue
+        # A retained story is placed again rather than carried forward with the
+        # answer it happened to get the day it was first read. RETAIN_DAYS is
+        # 45, so without this a change to the placement layer takes a month and
+        # a half to reach the map, and a story never re-fetched keeps its first
+        # answer for good. Rows already holding a point resolved from their own
+        # text are left alone; only the unplaced and the source-country
+        # approximations are reconsidered.
+        if not row.get("ll") or row.get("pa"):
+            _raw = ((row.get("t") or "") + " " + (row.get("s") or ""))
+            row["pn"], row["ll"], row["pa"] = point_for(
+                _raw.lower(), row.get("pl") or [], row.get("sr") or [],
+                row.get("w") or [], row.get("gl"), _raw)
+            if row["ll"]:
+                file_by_country(row, country_for(_raw, row.get("gl")))
+        absorb(row)
 
     cutoff = int(time.time() * 1000) - RETAIN_DAYS * 86400000
     items = [i for i in items if (i.get("d") or cutoff + 1) >= cutoff]

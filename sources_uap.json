@@ -1,1225 +1,1475 @@
 {
-  "_note": "Wires for the UAP feed. harvest_uap.py reads this and writes wire_uap.json. Each wire carries a 'standing': official, science, press, specialist or sceptic. Standing is provenance and is shown on every row; it is not a claim that a story is true. The 'evidence' block is a set of searches aimed at documents, sensor data and hearings rather than commentary. Locale coverage is expanded: several country editions per language, and each query split into slices so no single search hits Google News's ~100-result cap.",
-  "direct": [
-    {
-      "name": "AARO (US DoD)",
-      "lang": "en",
-      "standing": "official",
-      "url": "https://www.aaro.mil/DesktopModules/ArticleCS/RSS.aspx?ContentType=1&Site=1000&max=25"
-    },
-    {
-      "name": "US DoD releases",
-      "lang": "en",
-      "standing": "official",
-      "url": "https://www.war.gov/DesktopModules/ArticleCS/RSS.aspx?ContentType=1&Site=945&max=25"
-    },
-    {
-      "name": "NASA",
-      "lang": "en",
-      "standing": "official",
-      "url": "https://www.nasa.gov/feed/"
-    },
-    {
-      "name": "The Black Vault — documents",
-      "lang": "en",
-      "standing": "official",
-      "url": "https://www.theblackvault.com/documentarchive/feed/"
-    },
-    {
-      "name": "arXiv — UAP research",
-      "lang": "en",
-      "standing": "science",
-      "kind": "preprint",
-      "url": "https://export.arxiv.org/api/query?search_query=all:%22unidentified+aerial+phenomena%22+OR+all:%22unidentified+anomalous+phenomena%22+OR+all:%22technosignature%22&sortBy=submittedDate&sortOrder=descending&max_results=30"
-    },
-    {
-      "name": "Scientific Coalition (SCU)",
-      "lang": "en",
-      "standing": "science",
-      "url": "https://www.explorescu.org/blog?format=rss"
-    },
-    {
-      "name": "Avi Loeb",
-      "lang": "en",
-      "standing": "science",
-      "url": "https://avi-loeb.medium.com/feed"
-    },
-    {
-      "name": "Nature — news",
-      "lang": "en",
-      "standing": "science",
-      "url": "https://www.nature.com/nature.rss"
-    },
-    {
-      "name": "Scientific American",
-      "lang": "en",
-      "standing": "science",
-      "url": "https://www.scientificamerican.com/platform/syndication/rss/"
-    },
-    {
-      "name": "The Debrief",
-      "lang": "en",
-      "standing": "specialist",
-      "url": "https://thedebrief.org/feed/"
-    },
-    {
-      "name": "Liberation Times",
-      "lang": "en",
-      "standing": "specialist",
-      "url": "https://www.liberationtimes.com/articles?format=rss"
-    },
-    {
-      "name": "Metabunk",
-      "lang": "en",
-      "standing": "sceptic",
-      "url": "https://www.metabunk.org/forums/-/index.rss"
-    },
-    {
-      "name": "Skeptical Inquirer",
-      "lang": "en",
-      "standing": "sceptic",
-      "url": "https://skepticalinquirer.org/feed/"
-    },
-    {
-      "name": "Space.com",
-      "lang": "en",
-      "standing": "press",
-      "url": "https://www.space.com/feeds/all"
-    },
-    {
-      "name": "Ars Technica — Space",
-      "lang": "en",
-      "standing": "press",
-      "url": "https://feeds.arstechnica.com/arstechnica/space"
-    }
-  ],
-  "gnews": [
-    {
-      "label": "English (US) 1",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "UAP OR \"unidentified anomalous phenomena\" OR AARO"
-    },
-    {
-      "label": "English (US) 2",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"UFO hearing\" OR \"Pentagon UFO\""
-    },
-    {
-      "label": "English (GB) 1",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "UAP OR \"unidentified anomalous phenomena\" OR AARO"
-    },
-    {
-      "label": "English (GB) 2",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "\"UFO hearing\" OR \"Pentagon UFO\""
-    },
-    {
-      "label": "English (IN) 1",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "UAP OR \"unidentified anomalous phenomena\" OR AARO"
-    },
-    {
-      "label": "English (IN) 2",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "\"UFO hearing\" OR \"Pentagon UFO\""
-    },
-    {
-      "label": "English (AU) 1",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-AU",
-      "gl": "AU",
-      "ceid": "AU:en",
-      "query": "UAP OR \"unidentified anomalous phenomena\" OR AARO"
-    },
-    {
-      "label": "English (AU) 2",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-AU",
-      "gl": "AU",
-      "ceid": "AU:en",
-      "query": "\"UFO hearing\" OR \"Pentagon UFO\""
-    },
-    {
-      "label": "English (UK) (US) 1",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO files\""
-    },
-    {
-      "label": "English (UK) (US) 2",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"Ministry of Defence UFO\""
-    },
-    {
-      "label": "English (UK) (GB) 1",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO files\""
-    },
-    {
-      "label": "English (UK) (GB) 2",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "\"Ministry of Defence UFO\""
-    },
-    {
-      "label": "English (UK) (IN) 1",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO files\""
-    },
-    {
-      "label": "English (UK) (IN) 2",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "\"Ministry of Defence UFO\""
-    },
-    {
-      "label": "English (UK) (AU) 1",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-AU",
-      "gl": "AU",
-      "ceid": "AU:en",
-      "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO files\""
-    },
-    {
-      "label": "English (UK) (AU) 2",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-AU",
-      "gl": "AU",
-      "ceid": "AU:en",
-      "query": "\"Ministry of Defence UFO\""
-    },
-    {
-      "label": "English (India) (US)",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "UAP sighting OR \"unidentified flying object\" airforce OR \"UFO report\" India"
-    },
-    {
-      "label": "English (India) (GB)",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "UAP sighting OR \"unidentified flying object\" airforce OR \"UFO report\" India"
-    },
-    {
-      "label": "English (India) (IN)",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "UAP sighting OR \"unidentified flying object\" airforce OR \"UFO report\" India"
-    },
-    {
-      "label": "English (India) (AU)",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-AU",
-      "gl": "AU",
-      "ceid": "AU:en",
-      "query": "UAP sighting OR \"unidentified flying object\" airforce OR \"UFO report\" India"
-    },
-    {
-      "label": "English (Aus) (US)",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO sighting\" defence"
-    },
-    {
-      "label": "English (Aus) (GB)",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO sighting\" defence"
-    },
-    {
-      "label": "English (Aus) (IN)",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO sighting\" defence"
-    },
-    {
-      "label": "English (Aus) (AU)",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-AU",
-      "gl": "AU",
-      "ceid": "AU:en",
-      "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO sighting\" defence"
-    },
-    {
-      "label": "English (Canada) (CA) 1",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-CA",
-      "gl": "CA",
-      "ceid": "CA:en",
-      "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO report\" Canada"
-    },
-    {
-      "label": "English (Canada) (CA) 2",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-CA",
-      "gl": "CA",
-      "ceid": "CA:en",
-      "query": "NORAD object"
-    },
-    {
-      "label": "English (Canada) (US) 1",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO report\" Canada"
-    },
-    {
-      "label": "English (Canada) (US) 2",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "NORAD object"
-    },
-    {
-      "label": "English (Canada) (GB) 1",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO report\" Canada"
-    },
-    {
-      "label": "English (Canada) (GB) 2",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "NORAD object"
-    },
-    {
-      "label": "English (Canada) (IN) 1",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO report\" Canada"
-    },
-    {
-      "label": "English (Canada) (IN) 2",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "NORAD object"
-    },
-    {
-      "label": "English (S. Africa) (ZA)",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-ZA",
-      "gl": "ZA",
-      "ceid": "ZA:en",
-      "query": "UAP OR \"unidentified flying object\" OR \"UFO sighting\" investigation"
-    },
-    {
-      "label": "English (S. Africa) (US)",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "UAP OR \"unidentified flying object\" OR \"UFO sighting\" investigation"
-    },
-    {
-      "label": "English (S. Africa) (GB)",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "UAP OR \"unidentified flying object\" OR \"UFO sighting\" investigation"
-    },
-    {
-      "label": "English (S. Africa) (IN)",
-      "lang": "en",
-      "standing": "press",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "UAP OR \"unidentified flying object\" OR \"UFO sighting\" investigation"
-    },
-    {
-      "label": "Español (ES) 1",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es",
-      "gl": "ES",
-      "ceid": "ES:es",
-      "query": "OVNI OR \"fenómenos anómalos no identificados\" OR \"informe OVNI\""
-    },
-    {
-      "label": "Español (ES) 2",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es",
-      "gl": "ES",
-      "ceid": "ES:es",
-      "query": "desclasificación OVNI"
-    },
-    {
-      "label": "Español (MX) 1",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "MX",
-      "ceid": "MX:es-419",
-      "query": "OVNI OR \"fenómenos anómalos no identificados\" OR \"informe OVNI\""
-    },
-    {
-      "label": "Español (MX) 2",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "MX",
-      "ceid": "MX:es-419",
-      "query": "desclasificación OVNI"
-    },
-    {
-      "label": "Español (AR) 1",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "AR",
-      "ceid": "AR:es-419",
-      "query": "OVNI OR \"fenómenos anómalos no identificados\" OR \"informe OVNI\""
-    },
-    {
-      "label": "Español (AR) 2",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "AR",
-      "ceid": "AR:es-419",
-      "query": "desclasificación OVNI"
-    },
-    {
-      "label": "Español (CO) 1",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "CO",
-      "ceid": "CO:es-419",
-      "query": "OVNI OR \"fenómenos anómalos no identificados\" OR \"informe OVNI\""
-    },
-    {
-      "label": "Español (CO) 2",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "CO",
-      "ceid": "CO:es-419",
-      "query": "desclasificación OVNI"
-    },
-    {
-      "label": "Español (MX) (ES) 1",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es",
-      "gl": "ES",
-      "ceid": "ES:es",
-      "query": "OVNI OR FANI OR \"avistamiento OVNI\""
-    },
-    {
-      "label": "Español (MX) (ES) 2",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es",
-      "gl": "ES",
-      "ceid": "ES:es",
-      "query": "\"audiencia OVNI\" OR \"objeto no identificado\""
-    },
-    {
-      "label": "Español (MX) (MX) 1",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "MX",
-      "ceid": "MX:es-419",
-      "query": "OVNI OR FANI OR \"avistamiento OVNI\""
-    },
-    {
-      "label": "Español (MX) (MX) 2",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "MX",
-      "ceid": "MX:es-419",
-      "query": "\"audiencia OVNI\" OR \"objeto no identificado\""
-    },
-    {
-      "label": "Español (MX) (AR) 1",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "AR",
-      "ceid": "AR:es-419",
-      "query": "OVNI OR FANI OR \"avistamiento OVNI\""
-    },
-    {
-      "label": "Español (MX) (AR) 2",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "AR",
-      "ceid": "AR:es-419",
-      "query": "\"audiencia OVNI\" OR \"objeto no identificado\""
-    },
-    {
-      "label": "Español (MX) (CO) 1",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "CO",
-      "ceid": "CO:es-419",
-      "query": "OVNI OR FANI OR \"avistamiento OVNI\""
-    },
-    {
-      "label": "Español (MX) (CO) 2",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "CO",
-      "ceid": "CO:es-419",
-      "query": "\"audiencia OVNI\" OR \"objeto no identificado\""
-    },
-    {
-      "label": "Español (Chile) (CL) 1",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "CL",
-      "ceid": "CL:es-419",
-      "query": "CEFAA OR OVNI Chile OR \"fenómeno aéreo anómalo\""
-    },
-    {
-      "label": "Español (Chile) (CL) 2",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "CL",
-      "ceid": "CL:es-419",
-      "query": "DGAC informe"
-    },
-    {
-      "label": "Español (Chile) (ES) 1",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es",
-      "gl": "ES",
-      "ceid": "ES:es",
-      "query": "CEFAA OR OVNI Chile OR \"fenómeno aéreo anómalo\""
-    },
-    {
-      "label": "Español (Chile) (ES) 2",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es",
-      "gl": "ES",
-      "ceid": "ES:es",
-      "query": "DGAC informe"
-    },
-    {
-      "label": "Español (Chile) (MX) 1",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "MX",
-      "ceid": "MX:es-419",
-      "query": "CEFAA OR OVNI Chile OR \"fenómeno aéreo anómalo\""
-    },
-    {
-      "label": "Español (Chile) (MX) 2",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "MX",
-      "ceid": "MX:es-419",
-      "query": "DGAC informe"
-    },
-    {
-      "label": "Español (Chile) (AR) 1",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "AR",
-      "ceid": "AR:es-419",
-      "query": "CEFAA OR OVNI Chile OR \"fenómeno aéreo anómalo\""
-    },
-    {
-      "label": "Español (Chile) (AR) 2",
-      "lang": "es",
-      "standing": "press",
-      "hl": "es-419",
-      "gl": "AR",
-      "ceid": "AR:es-419",
-      "query": "DGAC informe"
-    },
-    {
-      "label": "Português (BR) 1",
-      "lang": "pt",
-      "standing": "press",
-      "hl": "pt-BR",
-      "gl": "BR",
-      "ceid": "BR:pt-419",
-      "query": "OVNI OR \"objeto voador não identificado\" OR \"Operação Prato\""
-    },
-    {
-      "label": "Português (BR) 2",
-      "lang": "pt",
-      "standing": "press",
-      "hl": "pt-BR",
-      "gl": "BR",
-      "ceid": "BR:pt-419",
-      "query": "\"documentos OVNI\" FAB"
-    },
-    {
-      "label": "Português (PT) 1",
-      "lang": "pt",
-      "standing": "press",
-      "hl": "pt-BR",
-      "gl": "PT",
-      "ceid": "PT:pt-150",
-      "query": "OVNI OR \"objeto voador não identificado\" OR \"Operação Prato\""
-    },
-    {
-      "label": "Português (PT) 2",
-      "lang": "pt",
-      "standing": "press",
-      "hl": "pt-BR",
-      "gl": "PT",
-      "ceid": "PT:pt-150",
-      "query": "\"documentos OVNI\" FAB"
-    },
-    {
-      "label": "Português (AO) 1",
-      "lang": "pt",
-      "standing": "press",
-      "hl": "pt-BR",
-      "gl": "AO",
-      "ceid": "AO:pt-150",
-      "query": "OVNI OR \"objeto voador não identificado\" OR \"Operação Prato\""
-    },
-    {
-      "label": "Português (AO) 2",
-      "lang": "pt",
-      "standing": "press",
-      "hl": "pt-BR",
-      "gl": "AO",
-      "ceid": "AO:pt-150",
-      "query": "\"documentos OVNI\" FAB"
-    },
-    {
-      "label": "Français (FR) 1",
-      "lang": "fr",
-      "standing": "press",
-      "hl": "fr",
-      "gl": "FR",
-      "ceid": "FR:fr",
-      "query": "OVNI OR GEIPAN OR \"phénomènes aérospatiaux non identifiés\""
-    },
-    {
-      "label": "Français (FR) 2",
-      "lang": "fr",
-      "standing": "press",
-      "hl": "fr",
-      "gl": "FR",
-      "ceid": "FR:fr",
-      "query": "PAN CNES"
-    },
-    {
-      "label": "Français (BE) 1",
-      "lang": "fr",
-      "standing": "press",
-      "hl": "fr",
-      "gl": "BE",
-      "ceid": "BE:fr",
-      "query": "OVNI OR GEIPAN OR \"phénomènes aérospatiaux non identifiés\""
-    },
-    {
-      "label": "Français (BE) 2",
-      "lang": "fr",
-      "standing": "press",
-      "hl": "fr",
-      "gl": "BE",
-      "ceid": "BE:fr",
-      "query": "PAN CNES"
-    },
-    {
-      "label": "Français (CA) 1",
-      "lang": "fr",
-      "standing": "press",
-      "hl": "fr",
-      "gl": "CA",
-      "ceid": "CA:fr",
-      "query": "OVNI OR GEIPAN OR \"phénomènes aérospatiaux non identifiés\""
-    },
-    {
-      "label": "Français (CA) 2",
-      "lang": "fr",
-      "standing": "press",
-      "hl": "fr",
-      "gl": "CA",
-      "ceid": "CA:fr",
-      "query": "PAN CNES"
-    },
-    {
-      "label": "Français (SN) 1",
-      "lang": "fr",
-      "standing": "press",
-      "hl": "fr",
-      "gl": "SN",
-      "ceid": "SN:fr",
-      "query": "OVNI OR GEIPAN OR \"phénomènes aérospatiaux non identifiés\""
-    },
-    {
-      "label": "Français (SN) 2",
-      "lang": "fr",
-      "standing": "press",
-      "hl": "fr",
-      "gl": "SN",
-      "ceid": "SN:fr",
-      "query": "PAN CNES"
-    },
-    {
-      "label": "Deutsch (DE) 1",
-      "lang": "de",
-      "standing": "press",
-      "hl": "de",
-      "gl": "DE",
-      "ceid": "DE:de",
-      "query": "UFO OR \"unidentifizierte Flugobjekte\" OR UAP Bericht"
-    },
-    {
-      "label": "Deutsch (DE) 2",
-      "lang": "de",
-      "standing": "press",
-      "hl": "de",
-      "gl": "DE",
-      "ceid": "DE:de",
-      "query": "Bundeswehr UFO"
-    },
-    {
-      "label": "Deutsch (AT) 1",
-      "lang": "de",
-      "standing": "press",
-      "hl": "de",
-      "gl": "AT",
-      "ceid": "AT:de",
-      "query": "UFO OR \"unidentifizierte Flugobjekte\" OR UAP Bericht"
-    },
-    {
-      "label": "Deutsch (AT) 2",
-      "lang": "de",
-      "standing": "press",
-      "hl": "de",
-      "gl": "AT",
-      "ceid": "AT:de",
-      "query": "Bundeswehr UFO"
-    },
-    {
-      "label": "Deutsch (CH) 1",
-      "lang": "de",
-      "standing": "press",
-      "hl": "de",
-      "gl": "CH",
-      "ceid": "CH:de",
-      "query": "UFO OR \"unidentifizierte Flugobjekte\" OR UAP Bericht"
-    },
-    {
-      "label": "Deutsch (CH) 2",
-      "lang": "de",
-      "standing": "press",
-      "hl": "de",
-      "gl": "CH",
-      "ceid": "CH:de",
-      "query": "Bundeswehr UFO"
-    },
-    {
-      "label": "Italiano (IT) 1",
-      "lang": "it",
-      "standing": "press",
-      "hl": "it",
-      "gl": "IT",
-      "ceid": "IT:it",
-      "query": "UFO OR \"fenomeni aerei non identificati\" OR avvistamento UFO"
-    },
-    {
-      "label": "Italiano (IT) 2",
-      "lang": "it",
-      "standing": "press",
-      "hl": "it",
-      "gl": "IT",
-      "ceid": "IT:it",
-      "query": "desecretati UFO"
-    },
-    {
-      "label": "Italiano (CH) 1",
-      "lang": "it",
-      "standing": "press",
-      "hl": "it",
-      "gl": "CH",
-      "ceid": "CH:it",
-      "query": "UFO OR \"fenomeni aerei non identificati\" OR avvistamento UFO"
-    },
-    {
-      "label": "Italiano (CH) 2",
-      "lang": "it",
-      "standing": "press",
-      "hl": "it",
-      "gl": "CH",
-      "ceid": "CH:it",
-      "query": "desecretati UFO"
-    },
-    {
-      "label": "Nederlands (NL)",
-      "lang": "nl",
-      "standing": "press",
-      "hl": "nl",
-      "gl": "NL",
-      "ceid": "NL:nl",
-      "query": "UFO OR \"onbekend vliegend object\" OR UAP rapport"
-    },
-    {
-      "label": "Nederlands (BE)",
-      "lang": "nl",
-      "standing": "press",
-      "hl": "nl",
-      "gl": "BE",
-      "ceid": "BE:nl",
-      "query": "UFO OR \"onbekend vliegend object\" OR UAP rapport"
-    },
-    {
-      "label": "Svenska",
-      "lang": "sv",
-      "standing": "press",
-      "hl": "sv",
-      "gl": "SE",
-      "ceid": "SE:sv",
-      "query": "UFO OR \"oidentifierat flygande föremål\" OR UAP rapport"
-    },
-    {
-      "label": "Ελληνικά",
-      "lang": "el",
-      "standing": "press",
-      "hl": "el",
-      "gl": "GR",
-      "ceid": "GR:el",
-      "query": "ΑΤΙΑ OR UAP OR \"άγνωστο ιπτάμενο αντικείμενο\""
-    },
-    {
-      "label": "Polski",
-      "lang": "pl",
-      "standing": "press",
-      "hl": "pl",
-      "gl": "PL",
-      "ceid": "PL:pl",
-      "query": "UFO OR \"niezidentyfikowany obiekt latający\" OR UAP raport"
-    },
-    {
-      "label": "Русский (RU) 1",
-      "lang": "ru",
-      "standing": "press",
-      "hl": "ru",
-      "gl": "RU",
-      "ceid": "RU:ru",
-      "query": "НЛО OR \"неопознанный летающий объект\" OR UAP доклад"
-    },
-    {
-      "label": "Русский (RU) 2",
-      "lang": "ru",
-      "standing": "press",
-      "hl": "ru",
-      "gl": "RU",
-      "ceid": "RU:ru",
-      "query": "рассекречены НЛО"
-    },
-    {
-      "label": "Русский (KZ) 1",
-      "lang": "ru",
-      "standing": "press",
-      "hl": "ru",
-      "gl": "KZ",
-      "ceid": "KZ:ru",
-      "query": "НЛО OR \"неопознанный летающий объект\" OR UAP доклад"
-    },
-    {
-      "label": "Русский (KZ) 2",
-      "lang": "ru",
-      "standing": "press",
-      "hl": "ru",
-      "gl": "KZ",
-      "ceid": "KZ:ru",
-      "query": "рассекречены НЛО"
-    },
-    {
-      "label": "Русский (BY) 1",
-      "lang": "ru",
-      "standing": "press",
-      "hl": "ru",
-      "gl": "BY",
-      "ceid": "BY:ru",
-      "query": "НЛО OR \"неопознанный летающий объект\" OR UAP доклад"
-    },
-    {
-      "label": "Русский (BY) 2",
-      "lang": "ru",
-      "standing": "press",
-      "hl": "ru",
-      "gl": "BY",
-      "ceid": "BY:ru",
-      "query": "рассекречены НЛО"
-    },
-    {
-      "label": "Українська",
-      "lang": "uk",
-      "standing": "press",
-      "hl": "uk",
-      "gl": "UA",
-      "ceid": "UA:uk",
-      "query": "НЛО OR \"невідомий літальний об'єкт\" OR UAP звіт"
-    },
-    {
-      "label": "Türkçe",
-      "lang": "tr",
-      "standing": "press",
-      "hl": "tr",
-      "gl": "TR",
-      "ceid": "TR:tr",
-      "query": "UFO OR \"tanımlanamayan uçan cisim\" OR UAP raporu"
-    },
-    {
-      "label": "العربية (EG)",
-      "lang": "ar",
-      "standing": "press",
-      "hl": "ar",
-      "gl": "EG",
-      "ceid": "EG:ar",
-      "query": "\"أجسام طائرة مجهولة\" OR \"ظواهر جوية مجهولة\" OR تقرير البنتاغون الأجسام"
-    },
-    {
-      "label": "العربية (SA)",
-      "lang": "ar",
-      "standing": "press",
-      "hl": "ar",
-      "gl": "SA",
-      "ceid": "SA:ar",
-      "query": "\"أجسام طائرة مجهولة\" OR \"ظواهر جوية مجهولة\" OR تقرير البنتاغون الأجسام"
-    },
-    {
-      "label": "العربية (AE)",
-      "lang": "ar",
-      "standing": "press",
-      "hl": "ar",
-      "gl": "AE",
-      "ceid": "AE:ar",
-      "query": "\"أجسام طائرة مجهولة\" OR \"ظواهر جوية مجهولة\" OR تقرير البنتاغون الأجسام"
-    },
-    {
-      "label": "العربية (MA)",
-      "lang": "ar",
-      "standing": "press",
-      "hl": "ar",
-      "gl": "MA",
-      "ceid": "MA:ar",
-      "query": "\"أجسام طائرة مجهولة\" OR \"ظواهر جوية مجهولة\" OR تقرير البنتاغون الأجسام"
-    },
-    {
-      "label": "עברית",
-      "lang": "he",
-      "standing": "press",
-      "hl": "iw",
-      "gl": "IL",
-      "ceid": "IL:iw",
-      "query": "עב\"מ OR \"חפץ מעופף בלתי מזוהה\" OR דוח הפנטגון עב\"מים"
-    },
-    {
-      "label": "فارسی",
-      "lang": "fa",
-      "standing": "press",
-      "hl": "fa",
-      "gl": "IR",
-      "ceid": "IR:fa",
-      "query": "\"اجسام پرنده ناشناس\" OR یوفو OR گزارش پنتاگون اجسام"
-    },
-    {
-      "label": "हिन्दी",
-      "lang": "hi",
-      "standing": "press",
-      "hl": "hi",
-      "gl": "IN",
-      "ceid": "IN:hi",
-      "query": "यूएफओ OR \"अज्ञात उड़न तश्तरी\" OR \"अज्ञात हवाई घटना\""
-    },
-    {
-      "label": "Bahasa Indonesia",
-      "lang": "id",
-      "standing": "press",
-      "hl": "id",
-      "gl": "ID",
-      "ceid": "ID:id",
-      "query": "UFO OR \"benda terbang tak dikenal\" OR laporan UAP"
-    },
-    {
-      "label": "Tiếng Việt",
-      "lang": "vi",
-      "standing": "press",
-      "hl": "vi",
-      "gl": "VN",
-      "ceid": "VN:vi",
-      "query": "UFO OR \"vật thể bay không xác định\" OR báo cáo UAP"
-    },
-    {
-      "label": "ไทย",
-      "lang": "th",
-      "standing": "press",
-      "hl": "th",
-      "gl": "TH",
-      "ceid": "TH:th",
-      "query": "ยูเอฟโอ OR \"วัตถุบินไม่ทราบชนิด\" OR รายงาน UAP"
-    },
-    {
-      "label": "日本語 1",
-      "lang": "ja",
-      "standing": "press",
-      "hl": "ja",
-      "gl": "JP",
-      "ceid": "JP:ja",
-      "query": "UAP OR 未確認飛行物体 OR 未確認異常現象"
-    },
-    {
-      "label": "日本語 2",
-      "lang": "ja",
-      "standing": "press",
-      "hl": "ja",
-      "gl": "JP",
-      "ceid": "JP:ja",
-      "query": "防衛省 UFO"
-    },
-    {
-      "label": "简体中文 (CN)",
-      "lang": "zh",
-      "standing": "press",
-      "hl": "zh-CN",
-      "gl": "CN",
-      "ceid": "CN:zh-Hans",
-      "query": "不明飞行物 OR UAP 报告 OR 五角大楼 不明 现象"
-    },
-    {
-      "label": "简体中文 (TW)",
-      "lang": "zh",
-      "standing": "press",
-      "hl": "zh-TW",
-      "gl": "TW",
-      "ceid": "TW:zh-Hant",
-      "query": "不明飞行物 OR UAP 报告 OR 五角大楼 不明 现象"
-    },
-    {
-      "label": "简体中文 (HK)",
-      "lang": "zh",
-      "standing": "press",
-      "hl": "zh-HK",
-      "gl": "HK",
-      "ceid": "HK:zh-Hant",
-      "query": "不明飞行物 OR UAP 报告 OR 五角大楼 不明 现象"
-    },
-    {
-      "label": "简体中文 (SG)",
-      "lang": "zh",
-      "standing": "press",
-      "hl": "zh-CN",
-      "gl": "SG",
-      "ceid": "SG:zh-Hans",
-      "query": "不明飞行物 OR UAP 报告 OR 五角大楼 不明 现象"
-    },
-    {
-      "label": "繁體中文 (CN)",
-      "lang": "zh",
-      "standing": "press",
-      "hl": "zh-CN",
-      "gl": "CN",
-      "ceid": "CN:zh-Hans",
-      "query": "不明飛行物 OR UAP 報告 OR 五角大廈 不明現象"
-    },
-    {
-      "label": "繁體中文 (TW)",
-      "lang": "zh",
-      "standing": "press",
-      "hl": "zh-TW",
-      "gl": "TW",
-      "ceid": "TW:zh-Hant",
-      "query": "不明飛行物 OR UAP 報告 OR 五角大廈 不明現象"
-    },
-    {
-      "label": "繁體中文 (HK)",
-      "lang": "zh",
-      "standing": "press",
-      "hl": "zh-HK",
-      "gl": "HK",
-      "ceid": "HK:zh-Hant",
-      "query": "不明飛行物 OR UAP 報告 OR 五角大廈 不明現象"
-    },
-    {
-      "label": "繁體中文 (SG)",
-      "lang": "zh",
-      "standing": "press",
-      "hl": "zh-CN",
-      "gl": "SG",
-      "ceid": "SG:zh-Hans",
-      "query": "不明飛行物 OR UAP 報告 OR 五角大廈 不明現象"
-    },
-    {
-      "label": "한국어",
-      "lang": "ko",
-      "standing": "press",
-      "hl": "ko",
-      "gl": "KR",
-      "ceid": "KR:ko",
-      "query": "미확인 비행 물체 OR UAP 보고서 OR 펜타곤 미확인"
-    }
-  ],
-  "evidence": [
-    {
-      "label": "Hearings & oversight",
-      "lang": "en",
-      "standing": "official",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "UAP hearing congress OR \"UAP Disclosure Act\" OR AARO report congress OR \"select committee\" UAP testimony"
-    },
-    {
-      "label": "Documents & FOIA",
-      "lang": "en",
-      "standing": "official",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "UAP documents released OR \"declassified\" UAP OR FOIA UFO records OR \"UAP records\" archive"
-    },
-    {
-      "label": "Sensor & imagery",
-      "lang": "en",
-      "standing": "official",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "UAP radar data OR \"infrared imagery\" UAP OR \"multi-sensor\" unidentified OR pilot radar unidentified"
-    },
-    {
-      "label": "Scientific study",
-      "lang": "en",
-      "standing": "science",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "Galileo Project UAP OR \"peer-reviewed\" UAP study OR UAP instrument observatory OR \"anomalous phenomena\" research"
-    },
-    {
-      "label": "Explanations & debunks",
-      "lang": "en",
-      "standing": "sceptic",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "UAP explained balloon OR UFO sighting identified as OR \"prosaic explanation\" UAP OR Starlink mistaken UFO"
-    },
-    {
-      "label": "Other governments",
-      "lang": "en",
-      "standing": "official",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "GEIPAN OR CEFAA UAP OR \"defence ministry\" UFO records OR NATO unidentified object OR \"national airspace\" unidentified object"
-    },
-    {
-      "label": "Programmes & funding",
-      "lang": "en",
-      "standing": "official",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "AATIP OR \"Advanced Aerospace Threat\" OR UAP office budget OR \"whistleblower\" UAP testimony inspector general"
-    }
-  ]
+ "_note": "Wires for the UAP feed. harvest_uap.py reads this and writes wire_uap.json. Each wire carries a 'standing': official, science, press, specialist or sceptic. Standing is provenance and is shown on every row; it is not a claim that a story is true. The 'evidence' block is a set of searches aimed at documents, sensor data and hearings rather than commentary. Locale coverage is expanded: several country editions per language, and each query split into slices so no single search hits Google News's ~100-result cap.",
+ "direct": [
+  {
+   "name": "AARO (US DoD)",
+   "lang": "en",
+   "standing": "official",
+   "url": "https://www.aaro.mil/DesktopModules/ArticleCS/RSS.aspx?ContentType=1&Site=1000&max=25"
+  },
+  {
+   "name": "US DoD releases",
+   "lang": "en",
+   "standing": "official",
+   "url": "https://www.war.gov/DesktopModules/ArticleCS/RSS.aspx?ContentType=1&Site=945&max=25"
+  },
+  {
+   "name": "NASA",
+   "lang": "en",
+   "standing": "official",
+   "url": "https://www.nasa.gov/feed/"
+  },
+  {
+   "name": "The Black Vault — documents",
+   "lang": "en",
+   "standing": "official",
+   "url": "https://www.theblackvault.com/documentarchive/feed/"
+  },
+  {
+   "name": "arXiv — UAP research",
+   "lang": "en",
+   "standing": "science",
+   "kind": "preprint",
+   "url": "https://export.arxiv.org/api/query?search_query=all:%22unidentified+aerial+phenomena%22+OR+all:%22unidentified+anomalous+phenomena%22+OR+all:%22technosignature%22&sortBy=submittedDate&sortOrder=descending&max_results=30"
+  },
+  {
+   "name": "Scientific Coalition (SCU)",
+   "lang": "en",
+   "standing": "science",
+   "url": "https://www.explorescu.org/blog?format=rss"
+  },
+  {
+   "name": "Avi Loeb",
+   "lang": "en",
+   "standing": "science",
+   "url": "https://avi-loeb.medium.com/feed"
+  },
+  {
+   "name": "Nature — news",
+   "lang": "en",
+   "standing": "science",
+   "url": "https://www.nature.com/nature.rss"
+  },
+  {
+   "name": "Scientific American",
+   "lang": "en",
+   "standing": "science",
+   "url": "https://www.scientificamerican.com/platform/syndication/rss/"
+  },
+  {
+   "name": "The Debrief",
+   "lang": "en",
+   "standing": "specialist",
+   "url": "https://thedebrief.org/feed/"
+  },
+  {
+   "name": "Liberation Times",
+   "lang": "en",
+   "standing": "specialist",
+   "url": "https://www.liberationtimes.com/articles?format=rss"
+  },
+  {
+   "name": "Metabunk",
+   "lang": "en",
+   "standing": "sceptic",
+   "url": "https://www.metabunk.org/forums/-/index.rss"
+  },
+  {
+   "name": "Skeptical Inquirer",
+   "lang": "en",
+   "standing": "sceptic",
+   "url": "https://skepticalinquirer.org/feed/"
+  },
+  {
+   "name": "Space.com",
+   "lang": "en",
+   "standing": "press",
+   "url": "https://www.space.com/feeds/all"
+  },
+  {
+   "name": "Ars Technica — Space",
+   "lang": "en",
+   "standing": "press",
+   "url": "https://feeds.arstechnica.com/arstechnica/space"
+  }
+ ],
+ "gnews": [
+  {
+   "label": "English (US) 1",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "UAP OR \"unidentified anomalous phenomena\" OR AARO"
+  },
+  {
+   "label": "English (US) 2",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"UFO hearing\" OR \"Pentagon UFO\""
+  },
+  {
+   "label": "English (GB) 1",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "UAP OR \"unidentified anomalous phenomena\" OR AARO"
+  },
+  {
+   "label": "English (GB) 2",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"UFO hearing\" OR \"Pentagon UFO\""
+  },
+  {
+   "label": "English (IN) 1",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "UAP OR \"unidentified anomalous phenomena\" OR AARO"
+  },
+  {
+   "label": "English (IN) 2",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"UFO hearing\" OR \"Pentagon UFO\""
+  },
+  {
+   "label": "English (AU) 1",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-AU",
+   "gl": "AU",
+   "ceid": "AU:en",
+   "query": "UAP OR \"unidentified anomalous phenomena\" OR AARO"
+  },
+  {
+   "label": "English (AU) 2",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-AU",
+   "gl": "AU",
+   "ceid": "AU:en",
+   "query": "\"UFO hearing\" OR \"Pentagon UFO\""
+  },
+  {
+   "label": "English (UK) (US) 1",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO files\""
+  },
+  {
+   "label": "English (UK) (US) 2",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"Ministry of Defence UFO\""
+  },
+  {
+   "label": "English (UK) (GB) 1",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO files\""
+  },
+  {
+   "label": "English (UK) (GB) 2",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"Ministry of Defence UFO\""
+  },
+  {
+   "label": "English (UK) (IN) 1",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO files\""
+  },
+  {
+   "label": "English (UK) (IN) 2",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"Ministry of Defence UFO\""
+  },
+  {
+   "label": "English (UK) (AU) 1",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-AU",
+   "gl": "AU",
+   "ceid": "AU:en",
+   "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO files\""
+  },
+  {
+   "label": "English (UK) (AU) 2",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-AU",
+   "gl": "AU",
+   "ceid": "AU:en",
+   "query": "\"Ministry of Defence UFO\""
+  },
+  {
+   "label": "English (India) (US)",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "UAP sighting OR \"unidentified flying object\" airforce OR \"UFO report\" India"
+  },
+  {
+   "label": "English (India) (GB)",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "UAP sighting OR \"unidentified flying object\" airforce OR \"UFO report\" India"
+  },
+  {
+   "label": "English (India) (IN)",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "UAP sighting OR \"unidentified flying object\" airforce OR \"UFO report\" India"
+  },
+  {
+   "label": "English (India) (AU)",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-AU",
+   "gl": "AU",
+   "ceid": "AU:en",
+   "query": "UAP sighting OR \"unidentified flying object\" airforce OR \"UFO report\" India"
+  },
+  {
+   "label": "English (Aus) (US)",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO sighting\" defence"
+  },
+  {
+   "label": "English (Aus) (GB)",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO sighting\" defence"
+  },
+  {
+   "label": "English (Aus) (IN)",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO sighting\" defence"
+  },
+  {
+   "label": "English (Aus) (AU)",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-AU",
+   "gl": "AU",
+   "ceid": "AU:en",
+   "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO sighting\" defence"
+  },
+  {
+   "label": "English (Canada) (CA) 1",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-CA",
+   "gl": "CA",
+   "ceid": "CA:en",
+   "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO report\" Canada"
+  },
+  {
+   "label": "English (Canada) (CA) 2",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-CA",
+   "gl": "CA",
+   "ceid": "CA:en",
+   "query": "NORAD object"
+  },
+  {
+   "label": "English (Canada) (US) 1",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO report\" Canada"
+  },
+  {
+   "label": "English (Canada) (US) 2",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "NORAD object"
+  },
+  {
+   "label": "English (Canada) (GB) 1",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO report\" Canada"
+  },
+  {
+   "label": "English (Canada) (GB) 2",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "NORAD object"
+  },
+  {
+   "label": "English (Canada) (IN) 1",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "UAP OR \"unidentified aerial phenomena\" OR \"UFO report\" Canada"
+  },
+  {
+   "label": "English (Canada) (IN) 2",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "NORAD object"
+  },
+  {
+   "label": "English (S. Africa) (ZA)",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-ZA",
+   "gl": "ZA",
+   "ceid": "ZA:en",
+   "query": "UAP OR \"unidentified flying object\" OR \"UFO sighting\" investigation"
+  },
+  {
+   "label": "English (S. Africa) (US)",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "UAP OR \"unidentified flying object\" OR \"UFO sighting\" investigation"
+  },
+  {
+   "label": "English (S. Africa) (GB)",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "UAP OR \"unidentified flying object\" OR \"UFO sighting\" investigation"
+  },
+  {
+   "label": "English (S. Africa) (IN)",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "UAP OR \"unidentified flying object\" OR \"UFO sighting\" investigation"
+  },
+  {
+   "label": "Español (ES) 1",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "query": "OVNI OR \"fenómenos anómalos no identificados\" OR \"informe OVNI\""
+  },
+  {
+   "label": "Español (ES) 2",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "query": "desclasificación OVNI"
+  },
+  {
+   "label": "Español (MX) 1",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "OVNI OR \"fenómenos anómalos no identificados\" OR \"informe OVNI\""
+  },
+  {
+   "label": "Español (MX) 2",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "desclasificación OVNI"
+  },
+  {
+   "label": "Español (AR) 1",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "AR",
+   "ceid": "AR:es-419",
+   "query": "OVNI OR \"fenómenos anómalos no identificados\" OR \"informe OVNI\""
+  },
+  {
+   "label": "Español (AR) 2",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "AR",
+   "ceid": "AR:es-419",
+   "query": "desclasificación OVNI"
+  },
+  {
+   "label": "Español (CO) 1",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "CO",
+   "ceid": "CO:es-419",
+   "query": "OVNI OR \"fenómenos anómalos no identificados\" OR \"informe OVNI\""
+  },
+  {
+   "label": "Español (CO) 2",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "CO",
+   "ceid": "CO:es-419",
+   "query": "desclasificación OVNI"
+  },
+  {
+   "label": "Español (MX) (ES) 1",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "query": "OVNI OR FANI OR \"avistamiento OVNI\""
+  },
+  {
+   "label": "Español (MX) (ES) 2",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "query": "\"audiencia OVNI\" OR \"objeto no identificado\""
+  },
+  {
+   "label": "Español (MX) (MX) 1",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "OVNI OR FANI OR \"avistamiento OVNI\""
+  },
+  {
+   "label": "Español (MX) (MX) 2",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "\"audiencia OVNI\" OR \"objeto no identificado\""
+  },
+  {
+   "label": "Español (MX) (AR) 1",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "AR",
+   "ceid": "AR:es-419",
+   "query": "OVNI OR FANI OR \"avistamiento OVNI\""
+  },
+  {
+   "label": "Español (MX) (AR) 2",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "AR",
+   "ceid": "AR:es-419",
+   "query": "\"audiencia OVNI\" OR \"objeto no identificado\""
+  },
+  {
+   "label": "Español (MX) (CO) 1",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "CO",
+   "ceid": "CO:es-419",
+   "query": "OVNI OR FANI OR \"avistamiento OVNI\""
+  },
+  {
+   "label": "Español (MX) (CO) 2",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "CO",
+   "ceid": "CO:es-419",
+   "query": "\"audiencia OVNI\" OR \"objeto no identificado\""
+  },
+  {
+   "label": "Español (Chile) (CL) 1",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "CL",
+   "ceid": "CL:es-419",
+   "query": "CEFAA OR OVNI Chile OR \"fenómeno aéreo anómalo\""
+  },
+  {
+   "label": "Español (Chile) (CL) 2",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "CL",
+   "ceid": "CL:es-419",
+   "query": "DGAC informe"
+  },
+  {
+   "label": "Español (Chile) (ES) 1",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "query": "CEFAA OR OVNI Chile OR \"fenómeno aéreo anómalo\""
+  },
+  {
+   "label": "Español (Chile) (ES) 2",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "query": "DGAC informe"
+  },
+  {
+   "label": "Español (Chile) (MX) 1",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "CEFAA OR OVNI Chile OR \"fenómeno aéreo anómalo\""
+  },
+  {
+   "label": "Español (Chile) (MX) 2",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "DGAC informe"
+  },
+  {
+   "label": "Español (Chile) (AR) 1",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "AR",
+   "ceid": "AR:es-419",
+   "query": "CEFAA OR OVNI Chile OR \"fenómeno aéreo anómalo\""
+  },
+  {
+   "label": "Español (Chile) (AR) 2",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es-419",
+   "gl": "AR",
+   "ceid": "AR:es-419",
+   "query": "DGAC informe"
+  },
+  {
+   "label": "Português (BR) 1",
+   "lang": "pt",
+   "standing": "press",
+   "hl": "pt-BR",
+   "gl": "BR",
+   "ceid": "BR:pt-419",
+   "query": "OVNI OR \"objeto voador não identificado\" OR \"Operação Prato\""
+  },
+  {
+   "label": "Português (BR) 2",
+   "lang": "pt",
+   "standing": "press",
+   "hl": "pt-BR",
+   "gl": "BR",
+   "ceid": "BR:pt-419",
+   "query": "\"documentos OVNI\" FAB"
+  },
+  {
+   "label": "Português (PT) 1",
+   "lang": "pt",
+   "standing": "press",
+   "hl": "pt-BR",
+   "gl": "PT",
+   "ceid": "PT:pt-150",
+   "query": "OVNI OR \"objeto voador não identificado\" OR \"Operação Prato\""
+  },
+  {
+   "label": "Português (PT) 2",
+   "lang": "pt",
+   "standing": "press",
+   "hl": "pt-BR",
+   "gl": "PT",
+   "ceid": "PT:pt-150",
+   "query": "\"documentos OVNI\" FAB"
+  },
+  {
+   "label": "Português (AO) 1",
+   "lang": "pt",
+   "standing": "press",
+   "hl": "pt-BR",
+   "gl": "AO",
+   "ceid": "AO:pt-150",
+   "query": "OVNI OR \"objeto voador não identificado\" OR \"Operação Prato\""
+  },
+  {
+   "label": "Português (AO) 2",
+   "lang": "pt",
+   "standing": "press",
+   "hl": "pt-BR",
+   "gl": "AO",
+   "ceid": "AO:pt-150",
+   "query": "\"documentos OVNI\" FAB"
+  },
+  {
+   "label": "Français (FR) 1",
+   "lang": "fr",
+   "standing": "press",
+   "hl": "fr",
+   "gl": "FR",
+   "ceid": "FR:fr",
+   "query": "OVNI OR GEIPAN OR \"phénomènes aérospatiaux non identifiés\""
+  },
+  {
+   "label": "Français (FR) 2",
+   "lang": "fr",
+   "standing": "press",
+   "hl": "fr",
+   "gl": "FR",
+   "ceid": "FR:fr",
+   "query": "PAN CNES"
+  },
+  {
+   "label": "Français (BE) 1",
+   "lang": "fr",
+   "standing": "press",
+   "hl": "fr",
+   "gl": "BE",
+   "ceid": "BE:fr",
+   "query": "OVNI OR GEIPAN OR \"phénomènes aérospatiaux non identifiés\""
+  },
+  {
+   "label": "Français (BE) 2",
+   "lang": "fr",
+   "standing": "press",
+   "hl": "fr",
+   "gl": "BE",
+   "ceid": "BE:fr",
+   "query": "PAN CNES"
+  },
+  {
+   "label": "Français (CA) 1",
+   "lang": "fr",
+   "standing": "press",
+   "hl": "fr",
+   "gl": "CA",
+   "ceid": "CA:fr",
+   "query": "OVNI OR GEIPAN OR \"phénomènes aérospatiaux non identifiés\""
+  },
+  {
+   "label": "Français (CA) 2",
+   "lang": "fr",
+   "standing": "press",
+   "hl": "fr",
+   "gl": "CA",
+   "ceid": "CA:fr",
+   "query": "PAN CNES"
+  },
+  {
+   "label": "Français (SN) 1",
+   "lang": "fr",
+   "standing": "press",
+   "hl": "fr",
+   "gl": "SN",
+   "ceid": "SN:fr",
+   "query": "OVNI OR GEIPAN OR \"phénomènes aérospatiaux non identifiés\""
+  },
+  {
+   "label": "Français (SN) 2",
+   "lang": "fr",
+   "standing": "press",
+   "hl": "fr",
+   "gl": "SN",
+   "ceid": "SN:fr",
+   "query": "PAN CNES"
+  },
+  {
+   "label": "Deutsch (DE) 1",
+   "lang": "de",
+   "standing": "press",
+   "hl": "de",
+   "gl": "DE",
+   "ceid": "DE:de",
+   "query": "UFO OR \"unidentifizierte Flugobjekte\" OR UAP Bericht"
+  },
+  {
+   "label": "Deutsch (DE) 2",
+   "lang": "de",
+   "standing": "press",
+   "hl": "de",
+   "gl": "DE",
+   "ceid": "DE:de",
+   "query": "Bundeswehr UFO"
+  },
+  {
+   "label": "Deutsch (AT) 1",
+   "lang": "de",
+   "standing": "press",
+   "hl": "de",
+   "gl": "AT",
+   "ceid": "AT:de",
+   "query": "UFO OR \"unidentifizierte Flugobjekte\" OR UAP Bericht"
+  },
+  {
+   "label": "Deutsch (AT) 2",
+   "lang": "de",
+   "standing": "press",
+   "hl": "de",
+   "gl": "AT",
+   "ceid": "AT:de",
+   "query": "Bundeswehr UFO"
+  },
+  {
+   "label": "Deutsch (CH) 1",
+   "lang": "de",
+   "standing": "press",
+   "hl": "de",
+   "gl": "CH",
+   "ceid": "CH:de",
+   "query": "UFO OR \"unidentifizierte Flugobjekte\" OR UAP Bericht"
+  },
+  {
+   "label": "Deutsch (CH) 2",
+   "lang": "de",
+   "standing": "press",
+   "hl": "de",
+   "gl": "CH",
+   "ceid": "CH:de",
+   "query": "Bundeswehr UFO"
+  },
+  {
+   "label": "Italiano (IT) 1",
+   "lang": "it",
+   "standing": "press",
+   "hl": "it",
+   "gl": "IT",
+   "ceid": "IT:it",
+   "query": "UFO OR \"fenomeni aerei non identificati\" OR avvistamento UFO"
+  },
+  {
+   "label": "Italiano (IT) 2",
+   "lang": "it",
+   "standing": "press",
+   "hl": "it",
+   "gl": "IT",
+   "ceid": "IT:it",
+   "query": "desecretati UFO"
+  },
+  {
+   "label": "Italiano (CH) 1",
+   "lang": "it",
+   "standing": "press",
+   "hl": "it",
+   "gl": "CH",
+   "ceid": "CH:it",
+   "query": "UFO OR \"fenomeni aerei non identificati\" OR avvistamento UFO"
+  },
+  {
+   "label": "Italiano (CH) 2",
+   "lang": "it",
+   "standing": "press",
+   "hl": "it",
+   "gl": "CH",
+   "ceid": "CH:it",
+   "query": "desecretati UFO"
+  },
+  {
+   "label": "Nederlands (NL)",
+   "lang": "nl",
+   "standing": "press",
+   "hl": "nl",
+   "gl": "NL",
+   "ceid": "NL:nl",
+   "query": "UFO OR \"onbekend vliegend object\" OR UAP rapport"
+  },
+  {
+   "label": "Nederlands (BE)",
+   "lang": "nl",
+   "standing": "press",
+   "hl": "nl",
+   "gl": "BE",
+   "ceid": "BE:nl",
+   "query": "UFO OR \"onbekend vliegend object\" OR UAP rapport"
+  },
+  {
+   "label": "Svenska",
+   "lang": "sv",
+   "standing": "press",
+   "hl": "sv",
+   "gl": "SE",
+   "ceid": "SE:sv",
+   "query": "UFO OR \"oidentifierat flygande föremål\" OR UAP rapport"
+  },
+  {
+   "label": "Ελληνικά",
+   "lang": "el",
+   "standing": "press",
+   "hl": "el",
+   "gl": "GR",
+   "ceid": "GR:el",
+   "query": "ΑΤΙΑ OR UAP OR \"άγνωστο ιπτάμενο αντικείμενο\""
+  },
+  {
+   "label": "Polski",
+   "lang": "pl",
+   "standing": "press",
+   "hl": "pl",
+   "gl": "PL",
+   "ceid": "PL:pl",
+   "query": "UFO OR \"niezidentyfikowany obiekt latający\" OR UAP raport"
+  },
+  {
+   "label": "Русский (RU) 1",
+   "lang": "ru",
+   "standing": "press",
+   "hl": "ru",
+   "gl": "RU",
+   "ceid": "RU:ru",
+   "query": "НЛО OR \"неопознанный летающий объект\" OR UAP доклад"
+  },
+  {
+   "label": "Русский (RU) 2",
+   "lang": "ru",
+   "standing": "press",
+   "hl": "ru",
+   "gl": "RU",
+   "ceid": "RU:ru",
+   "query": "рассекречены НЛО"
+  },
+  {
+   "label": "Русский (KZ) 1",
+   "lang": "ru",
+   "standing": "press",
+   "hl": "ru",
+   "gl": "KZ",
+   "ceid": "KZ:ru",
+   "query": "НЛО OR \"неопознанный летающий объект\" OR UAP доклад"
+  },
+  {
+   "label": "Русский (KZ) 2",
+   "lang": "ru",
+   "standing": "press",
+   "hl": "ru",
+   "gl": "KZ",
+   "ceid": "KZ:ru",
+   "query": "рассекречены НЛО"
+  },
+  {
+   "label": "Русский (BY) 1",
+   "lang": "ru",
+   "standing": "press",
+   "hl": "ru",
+   "gl": "BY",
+   "ceid": "BY:ru",
+   "query": "НЛО OR \"неопознанный летающий объект\" OR UAP доклад"
+  },
+  {
+   "label": "Русский (BY) 2",
+   "lang": "ru",
+   "standing": "press",
+   "hl": "ru",
+   "gl": "BY",
+   "ceid": "BY:ru",
+   "query": "рассекречены НЛО"
+  },
+  {
+   "label": "Українська",
+   "lang": "uk",
+   "standing": "press",
+   "hl": "uk",
+   "gl": "UA",
+   "ceid": "UA:uk",
+   "query": "НЛО OR \"невідомий літальний об'єкт\" OR UAP звіт"
+  },
+  {
+   "label": "Türkçe",
+   "lang": "tr",
+   "standing": "press",
+   "hl": "tr",
+   "gl": "TR",
+   "ceid": "TR:tr",
+   "query": "UFO OR \"tanımlanamayan uçan cisim\" OR UAP raporu"
+  },
+  {
+   "label": "العربية (EG)",
+   "lang": "ar",
+   "standing": "press",
+   "hl": "ar",
+   "gl": "EG",
+   "ceid": "EG:ar",
+   "query": "\"أجسام طائرة مجهولة\" OR \"ظواهر جوية مجهولة\" OR تقرير البنتاغون الأجسام"
+  },
+  {
+   "label": "العربية (SA)",
+   "lang": "ar",
+   "standing": "press",
+   "hl": "ar",
+   "gl": "SA",
+   "ceid": "SA:ar",
+   "query": "\"أجسام طائرة مجهولة\" OR \"ظواهر جوية مجهولة\" OR تقرير البنتاغون الأجسام"
+  },
+  {
+   "label": "العربية (AE)",
+   "lang": "ar",
+   "standing": "press",
+   "hl": "ar",
+   "gl": "AE",
+   "ceid": "AE:ar",
+   "query": "\"أجسام طائرة مجهولة\" OR \"ظواهر جوية مجهولة\" OR تقرير البنتاغون الأجسام"
+  },
+  {
+   "label": "العربية (MA)",
+   "lang": "ar",
+   "standing": "press",
+   "hl": "ar",
+   "gl": "MA",
+   "ceid": "MA:ar",
+   "query": "\"أجسام طائرة مجهولة\" OR \"ظواهر جوية مجهولة\" OR تقرير البنتاغون الأجسام"
+  },
+  {
+   "label": "עברית",
+   "lang": "he",
+   "standing": "press",
+   "hl": "iw",
+   "gl": "IL",
+   "ceid": "IL:iw",
+   "query": "עב\"מ OR \"חפץ מעופף בלתי מזוהה\" OR דוח הפנטגון עב\"מים"
+  },
+  {
+   "label": "فارسی",
+   "lang": "fa",
+   "standing": "press",
+   "hl": "fa",
+   "gl": "IR",
+   "ceid": "IR:fa",
+   "query": "\"اجسام پرنده ناشناس\" OR یوفو OR گزارش پنتاگون اجسام"
+  },
+  {
+   "label": "हिन्दी",
+   "lang": "hi",
+   "standing": "press",
+   "hl": "hi",
+   "gl": "IN",
+   "ceid": "IN:hi",
+   "query": "यूएफओ OR \"अज्ञात उड़न तश्तरी\" OR \"अज्ञात हवाई घटना\""
+  },
+  {
+   "label": "Bahasa Indonesia",
+   "lang": "id",
+   "standing": "press",
+   "hl": "id",
+   "gl": "ID",
+   "ceid": "ID:id",
+   "query": "UFO OR \"benda terbang tak dikenal\" OR laporan UAP"
+  },
+  {
+   "label": "Tiếng Việt",
+   "lang": "vi",
+   "standing": "press",
+   "hl": "vi",
+   "gl": "VN",
+   "ceid": "VN:vi",
+   "query": "UFO OR \"vật thể bay không xác định\" OR báo cáo UAP"
+  },
+  {
+   "label": "ไทย",
+   "lang": "th",
+   "standing": "press",
+   "hl": "th",
+   "gl": "TH",
+   "ceid": "TH:th",
+   "query": "ยูเอฟโอ OR \"วัตถุบินไม่ทราบชนิด\" OR รายงาน UAP"
+  },
+  {
+   "label": "日本語 1",
+   "lang": "ja",
+   "standing": "press",
+   "hl": "ja",
+   "gl": "JP",
+   "ceid": "JP:ja",
+   "query": "UAP OR 未確認飛行物体 OR 未確認異常現象"
+  },
+  {
+   "label": "日本語 2",
+   "lang": "ja",
+   "standing": "press",
+   "hl": "ja",
+   "gl": "JP",
+   "ceid": "JP:ja",
+   "query": "防衛省 UFO"
+  },
+  {
+   "label": "简体中文 (CN)",
+   "lang": "zh",
+   "standing": "press",
+   "hl": "zh-CN",
+   "gl": "CN",
+   "ceid": "CN:zh-Hans",
+   "query": "不明飞行物 OR UAP 报告 OR 五角大楼 不明 现象"
+  },
+  {
+   "label": "繁體中文 (TW)",
+   "lang": "zh",
+   "standing": "press",
+   "hl": "zh-TW",
+   "gl": "TW",
+   "ceid": "TW:zh-Hant",
+   "query": "不明飛行物 OR UAP 報告 OR 五角大樓 不明 現象"
+  },
+  {
+   "label": "繁體中文 (HK)",
+   "lang": "zh",
+   "standing": "press",
+   "hl": "zh-HK",
+   "gl": "HK",
+   "ceid": "HK:zh-Hant",
+   "query": "不明飛行物 OR UAP 報告 OR 五角大樓 不明 現象"
+  },
+  {
+   "label": "简体中文 (SG)",
+   "lang": "zh",
+   "standing": "press",
+   "hl": "zh-CN",
+   "gl": "SG",
+   "ceid": "SG:zh-Hans",
+   "query": "不明飞行物 OR UAP 报告 OR 五角大楼 不明 现象"
+  },
+  {
+   "label": "繁體中文 (CN)",
+   "lang": "zh",
+   "standing": "press",
+   "hl": "zh-CN",
+   "gl": "CN",
+   "ceid": "CN:zh-Hans",
+   "query": "不明飛行物 OR UAP 報告 OR 五角大廈 不明現象"
+  },
+  {
+   "label": "繁體中文 (TW)",
+   "lang": "zh",
+   "standing": "press",
+   "hl": "zh-TW",
+   "gl": "TW",
+   "ceid": "TW:zh-Hant",
+   "query": "不明飛行物 OR UAP 報告 OR 五角大廈 不明現象"
+  },
+  {
+   "label": "繁體中文 (HK)",
+   "lang": "zh",
+   "standing": "press",
+   "hl": "zh-HK",
+   "gl": "HK",
+   "ceid": "HK:zh-Hant",
+   "query": "不明飛行物 OR UAP 報告 OR 五角大廈 不明現象"
+  },
+  {
+   "label": "繁體中文 (SG)",
+   "lang": "zh",
+   "standing": "press",
+   "hl": "zh-CN",
+   "gl": "SG",
+   "ceid": "SG:zh-Hans",
+   "query": "不明飛行物 OR UAP 報告 OR 五角大廈 不明現象"
+  },
+  {
+   "label": "한국어",
+   "lang": "ko",
+   "standing": "press",
+   "hl": "ko",
+   "gl": "KR",
+   "ceid": "KR:ko",
+   "query": "미확인 비행 물체 OR UAP 보고서 OR 펜타곤 미확인"
+  },
+  {
+   "label": "English (US) · sensor",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "theme": "sensor",
+   "query": "radar data unidentified object OR infrared sensor UAP analysis OR instrumented detection programme"
+  },
+  {
+   "label": "Español · sensor",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "theme": "sensor",
+   "query": "datos de radar objeto no identificado OR análisis de sensores infrarrojos ovni"
+  },
+  {
+   "label": "Português (BR) · sensor",
+   "lang": "pt",
+   "standing": "press",
+   "hl": "pt-BR",
+   "gl": "BR",
+   "ceid": "BR:pt-419",
+   "theme": "sensor",
+   "query": "dados de radar objeto não identificado OR análise de sensores infravermelhos ovni"
+  },
+  {
+   "label": "Français · sensor",
+   "lang": "fr",
+   "standing": "press",
+   "hl": "fr",
+   "gl": "FR",
+   "ceid": "FR:fr",
+   "theme": "sensor",
+   "query": "données radar objet non identifié OR analyse capteurs infrarouges ovni"
+  },
+  {
+   "label": "Deutsch · sensor",
+   "lang": "de",
+   "standing": "press",
+   "hl": "de",
+   "gl": "DE",
+   "ceid": "DE:de",
+   "theme": "sensor",
+   "query": "Radardaten unidentifiziertes Objekt OR Infrarotsensor Analyse UFO"
+  },
+  {
+   "label": "Italiano · sensor",
+   "lang": "it",
+   "standing": "press",
+   "hl": "it",
+   "gl": "IT",
+   "ceid": "IT:it",
+   "theme": "sensor",
+   "query": "dati radar oggetto non identificato OR analisi sensori infrarossi ufo"
+  },
+  {
+   "label": "日本語 · sensor",
+   "lang": "ja",
+   "standing": "press",
+   "hl": "ja",
+   "gl": "JP",
+   "ceid": "JP:ja",
+   "theme": "sensor",
+   "query": "レーダー 記録 未確認 物体 OR 赤外線 センサー 解析 UAP"
+  },
+  {
+   "label": "한국어 · sensor",
+   "lang": "ko",
+   "standing": "press",
+   "hl": "ko",
+   "gl": "KR",
+   "ceid": "KR:ko",
+   "theme": "sensor",
+   "query": "레이더 자료 미확인 물체 OR 적외선 센서 분석"
+  },
+  {
+   "label": "中文 · sensor",
+   "lang": "zh",
+   "standing": "press",
+   "hl": "zh-TW",
+   "gl": "TW",
+   "ceid": "TW:zh-Hant",
+   "theme": "sensor",
+   "query": "雷達 資料 不明 物體 OR 紅外 感測器 分析"
+  },
+  {
+   "label": "English (US) · uso",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "theme": "uso",
+   "query": "unidentified submerged object navy OR underwater anomaly sonar report OR transmedium object"
+  },
+  {
+   "label": "Español · uso",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "theme": "uso",
+   "query": "objeto sumergido no identificado armada OR anomalía submarina sonar informe"
+  },
+  {
+   "label": "Português (BR) · uso",
+   "lang": "pt",
+   "standing": "press",
+   "hl": "pt-BR",
+   "gl": "BR",
+   "ceid": "BR:pt-419",
+   "theme": "uso",
+   "query": "objeto submerso não identificado marinha OR anomalia submarina sonar relatório"
+  },
+  {
+   "label": "Français · uso",
+   "lang": "fr",
+   "standing": "press",
+   "hl": "fr",
+   "gl": "FR",
+   "ceid": "FR:fr",
+   "theme": "uso",
+   "query": "objet submergé non identifié marine OR anomalie sous-marine sonar rapport"
+  },
+  {
+   "label": "Deutsch · uso",
+   "lang": "de",
+   "standing": "press",
+   "hl": "de",
+   "gl": "DE",
+   "ceid": "DE:de",
+   "theme": "uso",
+   "query": "unidentifiziertes Unterwasserobjekt Marine OR Sonar Anomalie Bericht"
+  },
+  {
+   "label": "日本語 · uso",
+   "lang": "ja",
+   "standing": "press",
+   "hl": "ja",
+   "gl": "JP",
+   "ceid": "JP:ja",
+   "theme": "uso",
+   "query": "未確認 水中 物体 海軍 OR ソナー 異常 報告"
+  },
+  {
+   "label": "한국어 · uso",
+   "lang": "ko",
+   "standing": "press",
+   "hl": "ko",
+   "gl": "KR",
+   "ceid": "KR:ko",
+   "theme": "uso",
+   "query": "미확인 수중 물체 해군 OR 소나 이상 보고"
+  },
+  {
+   "label": "中文 · uso",
+   "lang": "zh",
+   "standing": "press",
+   "hl": "zh-TW",
+   "gl": "TW",
+   "ceid": "TW:zh-Hant",
+   "theme": "uso",
+   "query": "不明 水下 物體 海軍 OR 聲吶 異常 報告"
+  },
+  {
+   "label": "English (US) · policy",
+   "lang": "en",
+   "standing": "press",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "theme": "policy",
+   "query": "UAP legislation amendment OR government UAP office budget OR national UAP reporting policy"
+  },
+  {
+   "label": "Español · policy",
+   "lang": "es",
+   "standing": "press",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "theme": "policy",
+   "query": "legislación sobre ovnis enmienda OR oficina gubernamental de ovnis presupuesto"
+  },
+  {
+   "label": "Português (BR) · policy",
+   "lang": "pt",
+   "standing": "press",
+   "hl": "pt-BR",
+   "gl": "BR",
+   "ceid": "BR:pt-419",
+   "theme": "policy",
+   "query": "legislação sobre ovnis emenda OR gabinete governamental de ovnis orçamento"
+  },
+  {
+   "label": "Français · policy",
+   "lang": "fr",
+   "standing": "press",
+   "hl": "fr",
+   "gl": "FR",
+   "ceid": "FR:fr",
+   "theme": "policy",
+   "query": "législation sur les ovnis amendement OR bureau gouvernemental ovni budget"
+  },
+  {
+   "label": "Deutsch · policy",
+   "lang": "de",
+   "standing": "press",
+   "hl": "de",
+   "gl": "DE",
+   "ceid": "DE:de",
+   "theme": "policy",
+   "query": "Gesetzgebung zu UAP Änderungsantrag OR staatliche UAP-Stelle Haushalt"
+  },
+  {
+   "label": "日本語 · policy",
+   "lang": "ja",
+   "standing": "press",
+   "hl": "ja",
+   "gl": "JP",
+   "ceid": "JP:ja",
+   "theme": "policy",
+   "query": "UAP 法案 修正 OR 政府 UAP 部署 予算"
+  },
+  {
+   "label": "한국어 · policy",
+   "lang": "ko",
+   "standing": "press",
+   "hl": "ko",
+   "gl": "KR",
+   "ceid": "KR:ko",
+   "theme": "policy",
+   "query": "UAP 법안 수정 OR 정부 UAP 부서 예산"
+  },
+  {
+   "label": "中文 · policy",
+   "lang": "zh",
+   "standing": "press",
+   "hl": "zh-TW",
+   "gl": "TW",
+   "ceid": "TW:zh-Hant",
+   "theme": "policy",
+   "query": "UAP 立法 修正 OR 政府 UAP 辦公室 預算"
+  }
+ ],
+ "evidence": [
+  {
+   "label": "Hearings & oversight",
+   "lang": "en",
+   "standing": "official",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "UAP hearing congress OR \"UAP Disclosure Act\" OR AARO report congress OR \"select committee\" UAP testimony"
+  },
+  {
+   "label": "Documents & FOIA",
+   "lang": "en",
+   "standing": "official",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "UAP documents released OR \"declassified\" UAP OR FOIA UFO records OR \"UAP records\" archive"
+  },
+  {
+   "label": "Sensor & imagery",
+   "lang": "en",
+   "standing": "official",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "UAP radar data OR \"infrared imagery\" UAP OR \"multi-sensor\" unidentified OR pilot radar unidentified"
+  },
+  {
+   "label": "Scientific study",
+   "lang": "en",
+   "standing": "science",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "Galileo Project UAP OR \"peer-reviewed\" UAP study OR UAP instrument observatory OR \"anomalous phenomena\" research"
+  },
+  {
+   "label": "Explanations & debunks",
+   "lang": "en",
+   "standing": "sceptic",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "UAP explained balloon OR UFO sighting identified as OR \"prosaic explanation\" UAP OR Starlink mistaken UFO"
+  },
+  {
+   "label": "Other governments",
+   "lang": "en",
+   "standing": "official",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "GEIPAN OR CEFAA UAP OR \"defence ministry\" UFO records OR NATO unidentified object OR \"national airspace\" unidentified object"
+  },
+  {
+   "label": "Programmes & funding",
+   "lang": "en",
+   "standing": "official",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "AATIP OR \"Advanced Aerospace Threat\" OR UAP office budget OR \"whistleblower\" UAP testimony inspector general"
+  }
+ ]
 }
